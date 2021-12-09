@@ -3,15 +3,24 @@ import { Typography, Container, Grid, Button } from '@mui/material';
 import useStyles from './styles';
 import { connect } from 'react-redux';
 import ProductCard from '../../ProductCard/ProductCard';
+import { incramentProduct, decramentProduct } from '../../../reduxStore/actions/cartActions';
 
-const Products = ({ products, loading, error }) => {
+const Products = ({ products, loading, error, onIncrament, onDecrament }) => {
 	const classes = useStyles();
 
 	const renderProductCards = () => {
 		if (loading) return [1, 2, 3, 4, 5].map((d) => <ProductCard loading={loading} key={d} />);
 
 		const array = products.map((item) => {
-			return <ProductCard {...item} loading={loading} key={item.id} />;
+			return (
+				<ProductCard
+					{...item}
+					loading={loading}
+					key={item.id}
+					onIncrament={() => onIncrament(item)}
+					onDecrament={() => onDecrament(item)}
+				/>
+			);
 		});
 
 		return array;
@@ -40,4 +49,11 @@ const mapStateToProps = (state) => {
 	return { products: items, loading, error };
 };
 
-export default connect(mapStateToProps)(Products);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		onIncrament: (data) => dispatch(incramentProduct(data)),
+		onDecrament: (data) => dispatch(decramentProduct(data))
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

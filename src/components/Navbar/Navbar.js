@@ -14,7 +14,7 @@ const Navbar = (props) => {
 			<AppBar position="static">
 				<Toolbar>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						Techover
+						SimpleShop
 					</Typography>
 					<Button onClick={() => history.push('/checkout')} color="inherit">
 						Checkout
